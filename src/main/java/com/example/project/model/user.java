@@ -22,75 +22,125 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.beans.factory.annotation.Value;
+
 
 @Entity()
 @Table(name="user")
 public class user {
 	
-	@JsonIgnore
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private final long id;
+	private  long id;
 	
-	@NotNull(message="nom shoud not be null")
+	//@NotNull(message="nom shoud not be null")
 	@Column(name="nom")
 	@JsonProperty("full_name")
-	private final String nom;
+    @NotNull
+	private String nom;
 	
-	@NotNull(message="prenom shoud not be null")
+	//@NotNull(message="prenom shoud not be null")
 	@Column(name="prenom")
-	private final String prenom;
+	private String prenom;
 	
-	@NotNull(message="tel shoud not be null")
+	//@NotNull(message="tel shoud not be null")
 	@Column(name="tel")
-	private final String tel;
+	private  String tel;
 	
-	@NotNull(message="Mail shoud not be null")
+	//@NotNull(message="Mail shoud not be null")
 	@Column(name="mail")
-	private final String mail;
+	private String mail;
+	
+	
 	
     //equipe join
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                 CascadeType.PERSIST,
                 CascadeType.MERGE
-            })
+            })  
+   
     @JoinTable(name = "User_Equipe",
-            joinColumns = { @JoinColumn(name = "id")},
-            inverseJoinColumns = { @JoinColumn(name = "id_eq") })
+            joinColumns = { @JoinColumn(name = "id_eq")},
+            inverseJoinColumns = { @JoinColumn(name = "id_user") })
     private List<Equipe> Equipes;
+    
+    
+    
     
     //list join
     @OneToMany(mappedBy= "user")
     private List<list> lists;
     
     
+    
+    
   //Commentaire join
     @OneToMany(mappedBy= "user_comm")
     private List<commentaire> commentaires;
     
-    
+  /*  public void addEquipe(Equipe Equipe) {
+        this.Equipes.add(Equipe);
+        
+    }*/
 	
-	public user(long id, String nom, String prenom, String tel, String mail) {
+	/*public user(long id, String nom, String prenom, String tel, String mail) {
 		
 		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.tel = tel;
 		this.mail = mail;
-	}
+	}*/
 
 	public long getId() {
 		return id;
 	}
 
-	public user() {
+/*	public user() {
 		this.id = 0;
 		this.nom = "";
 		this.prenom = "";
 		this.tel = "";
 		this.mail = "";
 		
+	}*/
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+
+	public List<list> getLists() {
+		return lists;
+	}
+
+	public void setLists(List<list> lists) {
+		this.lists = lists;
+	}
+
+	public List<commentaire> getCommentaires() {
+		return commentaires;
+	}
+
+	public void setCommentaires(List<commentaire> commentaires) {
+		this.commentaires = commentaires;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
 	}
 
 	public String getNom() {
@@ -109,6 +159,32 @@ public class user {
 		return mail;
 	}
 	
+	public List<Equipe> getEquipes() {
+	        return Equipes;
+	  }
+
+	public void setEquipes(List<Equipe> Equipes) {
+	        this.Equipes = Equipes;
+	   }
+	
+public user(long id, String nom, String prenom, String tel, String mail) {
+		
+		this.id = id;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.tel = tel;
+		this.mail = mail;
+	}
+
+public user() {
+	this.id = 0;
+	this.nom = "";
+	this.prenom = "";
+	this.tel = "";
+	this.mail = "";
+	
+}
+
 	
 
 }

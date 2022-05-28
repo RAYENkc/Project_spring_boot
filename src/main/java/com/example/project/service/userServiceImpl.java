@@ -3,11 +3,13 @@ package com.example.project.service;
 
 import java.util.List;
 
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.project.model.Equipe;
 import com.example.project.model.user;
 import com.example.project.repository.userRepository;
 
@@ -60,6 +62,12 @@ public class userServiceImpl implements userService {
 	public List<user> getUserBynom(String nom) {
 		
 		return uRepository.findBynom(nom);
+	}
+
+	@Override
+	public void addEquipeToUser(long id, Equipe equipe) {
+		
+		
 	}
 
 

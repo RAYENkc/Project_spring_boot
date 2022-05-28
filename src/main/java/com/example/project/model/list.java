@@ -2,6 +2,7 @@ package com.example.project.model;
 
 import java.util.List;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +13,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity()
@@ -20,15 +24,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class list {
 
 	
-	@JsonIgnore
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private final long id;
+	private  long id;
 	
 	@NotNull(message="nom_task shoud not be null")
-	@Column(name="nom_task")
-	@JsonProperty("nom_list")
-	private final String nom_list;
+	@Column(name="nom")
+	private  String nom;
 
 	
 	
@@ -37,25 +40,61 @@ public class list {
 	private user user;
 	
 	//Task join
+	@JsonManagedReference
+
     @OneToMany(mappedBy= "list")
     private List<task> tasks;
     
 	
 	
 	
-	public list() {
-		this.id = 0;
-		this.nom_list = "";
+	/*public list(long id, @NotNull(message = "nom shoud not be null") String nom) {
+		this.id = id;
+		this.nom = nom;
 		
+		
+	}*/
+
+	
+	public list() {
+		this.nom = "test";
+		this.id=12;
 	}
 
+	public String getNom() {
+		return nom;
+	}
+
+	
+
+	public long getUser() {
+		return user.getId();
+	}
+	/*
+	 * public void setNom(String nom) {
+		this.nom = nom;
+	}
+	public void setUser(user user) {
+		this.user = user;
+	}
+	
 	public long getId() {
 		return id;
 	}
+	
 
-	public String getNom_list() {
-		return nom_list;
+	public void setTasks(List<task> tasks) {
+		this.tasks = tasks;
+	}*/
+
+	
+	
+	public List<task> gettasks() {
+		return tasks;
 	}
+
+
+	
 	
 	
 }

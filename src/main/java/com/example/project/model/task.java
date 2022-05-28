@@ -13,38 +13,46 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity()
 @Table(name="task")
+
 public class task {
 
 	
-	@JsonIgnore
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private final long id;
+	private  long id;
 	
 	@NotNull(message="nom_taskshoud not be null")
 	@Column(name="nom_task")
 	@JsonProperty("nom_task")
-	private final String nom_task;
+	private  String nom_task;
 
-	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name="list_id")
 	private list list;
 	
 	//Commentaire join
+	@JsonBackReference
     @OneToMany(mappedBy= "task")
     private List<commentaire> commentaire;
     
 	
-	public task() {
-		this.id = 0;
-		this.nom_task = "";
 	
+
+  /*	public void setId(long id) {
+		this.id = id;
+	}*/
+
+	public void setNom_task(String nom_task) {
+		this.nom_task = nom_task;
 	}
 
 	public long getId() {
@@ -55,15 +63,30 @@ public class task {
 		return nom_task;
 	}
 
-	
-	
-	
-	
-	public task(long id, @NotNull(message = "nom_taskshoud not be null") String nom_task) {
-		super();
-		this.id = id;
-		this.nom_task = nom_task;
+	public list getList() {
+		return list;
 	}
+
+	public void setList(list list) {
+		this.list = list;
+	}
+
+	public List<commentaire> getCommentaire() {
+		return commentaire;
+	}
+
+	public task() {
+		
+		
+	}
+
+	/*public void setCommentaire(List<commentaire> commentaire) {
+		this.commentaire = commentaire;
+	}*/
+
+	
+	
+	
 	
 	
 	

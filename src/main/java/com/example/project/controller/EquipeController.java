@@ -1,28 +1,33 @@
 package com.example.project.controller;
 
+import java.lang.System.Logger;
 import java.util.List;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
 
+import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.example.project.model.Equipe;
 import com.example.project.model.user;
 import com.example.project.service.EquipeService;
 
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping()
+
 public class EquipeController {
 
 	@Autowired
@@ -38,9 +43,9 @@ public class EquipeController {
 	    	return eService.getSingleEquipe(id_eq);
 	    }
 	    
-	    
+	 
 	    @PostMapping("/equipe")
-	    public Equipe saveUser (@Valid @ModelAttribute("Equipe") Equipe equipe) {
+	    public Equipe saveEquipe(@RequestBody @Valid   @ModelAttribute Equipe equipe) {
 	    	return eService.saveEquipe(equipe);
 	    }
 	    
